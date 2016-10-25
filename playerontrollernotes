@@ -1,0 +1,13 @@
+Process of picking up items for scurry Couriers:
+
+1.enter item trigger
+    a.jump button becomes pick up/interact button
+    b.player cannot jump
+2.display some sort of sign above player head to show pickup readiness
+3.player presses button and picks up item
+    a. Player can no longer jump with honey or water
+    b. player speed decreases with honey or water
+    c. jump/interact button will now drop the item
+
+if player drops item in the designated trigger area money will be made
+and job will be complete.
