@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour {
 			jumping = false;
 			jumpDuration = jumpTime;
 			dropAllowed = false;
+			this.gameObject.layer = 12;  //12 is the player layer
 		}
 
 		else if(!grounded)
@@ -95,6 +96,11 @@ public class PlayerController : MonoBehaviour {
 		{
 
 			CarryButton();
+		}
+
+		if(dropAllowed)
+		{
+			Drop();
 		}
 
 		if(moveDir > 0 && !facingRight)
@@ -133,13 +139,20 @@ public class PlayerController : MonoBehaviour {
 		{
 			jumping = true;
 		}
-		if(Input.GetKey(KeyCode.Space) && dropAllowed)
-		{
-			Physics2D.IgnoreLayerCollision(12,10);
-			grounded = false;
-		}
 		anim.SetFloat("vspeed", rb.velocity.y);
 
+	}
+
+	void Drop()
+	{
+		if(Input.GetKey(KeyCode.Space))
+		{
+			Physics2D.IgnoreLayerCollision(12,10);
+		}
+		else
+		{
+			Physics2D.IgnoreLayerCollision(12,10,false);
+		}
 	}
 
 	void DetermineJumpButton()
@@ -147,7 +160,6 @@ public class PlayerController : MonoBehaviour {
 		if(!Input.GetKey(KeyCode.Space))
 		{
 			jumpAllowed = true;
-			Physics2D.IgnoreLayerCollision(12,10,false);
 		}
 	}
 
