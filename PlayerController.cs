@@ -15,11 +15,17 @@ public class PlayerController : MonoBehaviour {
 	private bool canJump;
 	private bool jumpAllowed;
 	private bool dropAllowed;
+
+
 	private bool interact;
 	private bool holding;
-	private GameObject carryObject;
 
+	private bool elevatorInteract;
+
+	private GameObject carryObject;
 	private GameObject carryObjectParent;
+
+	private GameObject interactObject;
 
 	public float speed;
 	public float maxSpeed;
@@ -51,6 +57,8 @@ public class PlayerController : MonoBehaviour {
 		dropAllowed = true;
 		interact = false;
 		holding = false;
+
+		elevatorInteract = false;
 
 		maxVelocity = maxSpeed;
 	}
@@ -101,6 +109,11 @@ public class PlayerController : MonoBehaviour {
 		if(dropAllowed)
 		{
 			Drop();
+		}
+
+		if(elevatorInteract)
+		{
+			Elevator();
 		}
 
 		if(moveDir > 0 && !facingRight)
@@ -226,6 +239,15 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void Elevator()
+	{
+
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			interactObject.GetComponent<ElevatorLever>().activated = true;
+		}
+	}
+
 	void OnTriggerEnter2D(Collider2D collision)
 	{
 		if(collision.gameObject.tag == "Food" || collision.gameObject.tag == "Water"
@@ -245,6 +267,15 @@ public class PlayerController : MonoBehaviour {
 		if(collision.gameObject.tag == "ShopRat")
 		{
 			exclamation.enabled = true;
+			interactObject = collision.gameObject;
+		}
+
+		if(collision.gameObject.tag == "Lever")
+		{
+			exclamation.enabled = true;
+			canJump = false;
+			elevatorInteract = true;
+			interactObject = collision.gameObject;
 		}
 
 	}
@@ -266,6 +297,15 @@ public class PlayerController : MonoBehaviour {
 		if(collision.gameObject.tag == "ShopRat")
 		{
 			exclamation.enabled = false;
+			interactObject = null;
+		}
+
+		if(collision.gameObject.tag == "Lever")
+		{
+			exclamation.enabled = false;
+			canJump = true;
+			elevatorInteract = false;
+			interactObject = null;
 		}
 	}
 
