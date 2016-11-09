@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 	private bool holding;
 
 	private bool elevatorInteract;
+	private bool itemSpawnInteract;
 
 	private GameObject carryObject;
 	private GameObject carryObjectParent;
@@ -48,7 +49,6 @@ public class PlayerController : MonoBehaviour {
 		//playSounds = GetComponent<PlaySounds>();
 
 		grounded = false;
-		dropAllowed = false;
 		canControl = true;
 		facingRight = true;
 		canCarry = false;
@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour {
 		holding = false;
 
 		elevatorInteract = false;
+		itemSpawnInteract = false;
 
 		maxVelocity = maxSpeed;
 	}
@@ -116,6 +117,11 @@ public class PlayerController : MonoBehaviour {
 			Elevator();
 		}
 
+		if(itemSpawnInteract)
+		{
+			Spawn();
+		}
+
 		if(moveDir > 0 && !facingRight)
 		{
 			Flip();
@@ -161,10 +167,12 @@ public class PlayerController : MonoBehaviour {
 		if(Input.GetKey(KeyCode.Space))
 		{
 			Physics2D.IgnoreLayerCollision(12,10);
+			Physics2D.IgnoreLayerCollision(12,13);
 		}
 		else
 		{
 			Physics2D.IgnoreLayerCollision(12,10,false);
+			Physics2D.IgnoreLayerCollision(12,13,false);
 		}
 	}
 
@@ -188,7 +196,7 @@ public class PlayerController : MonoBehaviour {
 			interact = false;
 		}
 
-		print("interact " + interact);
+		//print("interact " + interact);
 	}
 
 	void Jump()
@@ -242,9 +250,17 @@ public class PlayerController : MonoBehaviour {
 	void Elevator()
 	{
 
-		if(Input.GetKeyDown(KeyCode.Space))
+		if(Input.GetKeyDown(KeyCode.Space) && interactObject.GetComponent<ElevatorLever>().moving == false)
 		{
 			interactObject.GetComponent<ElevatorLever>().activated = true;
+		}
+	}
+
+	void Spawn()
+	{
+		if(Input.GetKeyDown(KeyCode.Space) && interactObject.GetComponent<SpawnItem>().spawning == false)
+		{
+			interactObject.GetComponent<SpawnItem>().activated = true;
 		}
 	}
 
@@ -278,6 +294,14 @@ public class PlayerController : MonoBehaviour {
 			interactObject = collision.gameObject;
 		}
 
+		if(collision.gameObject.tag == "Well")
+		{
+			exclamation.enabled = true;
+			interactObject = collision.gameObject;
+			itemSpawnInteract = true;
+			canJump = false;
+		}
+
 	}
 
 	void OnTriggerExit2D(Collider2D collision)
@@ -306,6 +330,14 @@ public class PlayerController : MonoBehaviour {
 			canJump = true;
 			elevatorInteract = false;
 			interactObject = null;
+		}
+
+		if(collision.gameObject.tag == "Well")
+		{
+			exclamation.enabled = false;
+			interactObject = null;
+			itemSpawnInteract = false;
+			canJump = true;
 		}
 	}
 
