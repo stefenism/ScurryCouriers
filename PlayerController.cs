@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 	private bool interact;
 	private bool holding;
 
+
 	private bool elevatorInteract;
 	private bool itemSpawnInteract;
 
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 	private GameObject carryObjectParent;
 
 	private GameObject interactObject;
+	private string interactObjectTag;
 
 	public float speed;
 	public float maxSpeed;
@@ -221,7 +223,7 @@ public class PlayerController : MonoBehaviour {
 		transform.localScale = theScale;
 	}
 
-	void PickupPutdown()
+	public void PickupPutdown()
 	{
 		if(holding)
 		{
@@ -231,6 +233,7 @@ public class PlayerController : MonoBehaviour {
 			maxVelocity = maxSpeed;
 			speed = maxSpeed;
 			carryObject.transform.parent = carryObjectParent.transform;
+			carryObject.tag = interactObjectTag;
 		}
 
 		else if(!holding)
@@ -244,6 +247,8 @@ public class PlayerController : MonoBehaviour {
 			carryObjectParent = carryObject.transform.parent.gameObject;
 			carryObject.transform.parent = transform;
 			carryObject.transform.position = carryPosition.transform.position;
+			interactObjectTag = carryObject.tag;
+			carryObject.tag = "Player";
 		}
 	}
 

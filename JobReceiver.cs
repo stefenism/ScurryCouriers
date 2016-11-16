@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class JobReceiver : MonoBehaviour {
 
+	public PlayerController player;
+
 	public List<GameObject> items;
 	public List<float> payments;
 	public List<float> deliveryTime;
@@ -15,6 +17,8 @@ public class JobReceiver : MonoBehaviour {
 	private bool received;
 	private bool jobInProgress;
 	private bool activated;
+
+	private int itemreceived = 100;
 	// Use this for initialization
 	void Start () {
 		items = new List<GameObject>();
@@ -80,29 +84,52 @@ public class JobReceiver : MonoBehaviour {
 	I don't think this code works yet.  But the Job Spawning and receiving works
 	other than that
 */
-	void CheckReceipt(GameObject item)
+	void CheckReceipt(string item)
 	{
 		for(int i = 0; i < items.Count; i++)
 		{
+			print(i);
+			print("items.count: " + items.Count);
 			if(received)
 			{
 				i = items.Count;
 			}
-			if(items[i] == item)
+			if(items[i].gameObject.tag == item)
 			{
 				received = true;
+				itemreceived = i;
+			}
+			else
+			{
+				Debug.Log("failed");
 			}
 		}
 	}
 
+	void jobReceived(int position)
+	{
+
+		items.RemoveAt(position);
+		payments.RemoveAt(position);
+		deliveryTime.RemoveAt(position);
+		currentTimes.RemoveAt(position);
+		startTimes.RemoveAt(position);
+
+		itemreceived = 100;
+		player.PickupPutdown();
+	}
+
 	void OnTriggerEnter2D(Collider2D collision)
 	{
-		CheckReceipt(collision.gameObject);
+		CheckReceipt(collision.gameObject.tag);
+
 		if(received)
 		{
-			//pay scurry
 			Debug.Log("received");
 			Destroy(collision.gameObject);
+			received = false;
+
+			jobReceived(itemreceived);
 		}
 	}
 }

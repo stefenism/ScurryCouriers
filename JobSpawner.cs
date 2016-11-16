@@ -35,10 +35,10 @@ public class JobSpawner : MonoBehaviour {
 		//decide pay based on item
 		//decide time frame based on item. (probably a pretty large time frame)
 		//send that data to spawn new job
-		int newItem = Random.Range(0,items.Length);
+		int newItem = Random.Range(0,items.Length - 1);
 
 		deliveryItem = items[newItem];
-		deliveryLocation = locations[Random.Range(0, locations.Length)];
+		deliveryLocation = locations[Random.Range(0, locations.Length - 1)];
 		deliveryPay = payments[newItem];
 		deliveryTimeFrame = 30f;
 
