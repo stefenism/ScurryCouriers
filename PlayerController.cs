@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour {
 	private float jumpDuration;
 
 	public bool grounded;
+	public bool landed;
 
 	public SpriteRenderer exclamation;
 	public GameObject carryPosition;
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour {
 		//playSounds = GetComponent<PlaySounds>();
 
 		grounded = false;
+		landed = false;
 		canControl = true;
 		facingRight = true;
 		canCarry = false;
@@ -140,6 +142,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		DetermineJumpButton();
+		anim.SetFloat("vspeed", rb.velocity.y);
 
 	}
 
@@ -160,7 +163,6 @@ public class PlayerController : MonoBehaviour {
 		{
 			jumping = true;
 		}
-		anim.SetFloat("vspeed", rb.velocity.y);
 
 	}
 

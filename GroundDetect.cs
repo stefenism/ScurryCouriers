@@ -37,6 +37,13 @@ public class GroundDetect : MonoBehaviour {
 		if(hit.collider != null)
 		{
 			player.grounded = true;
+			/*
+			if(hit.collider.gameObject.tag != "Ground")
+			{
+				Debug.Log("collided with: " + hit.collider.name);
+			}
+			*/
+
 			//player.airJump = 2;
 			//player.anim.SetBool("jumping", false);
 		}

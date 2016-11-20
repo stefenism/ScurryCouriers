@@ -13,19 +13,48 @@ public class JobSpawner : MonoBehaviour {
 	private float deliveryPay;
 	private float deliveryTimeFrame;
 
+	public float maxTimeBetweenDeliveries;
+	public float minTimeBetweenDeliveries;
+
+	private bool activated;
+	private float currentTime;
+	private float startTime;
+	private float nextDelivery;
+
 
 	// Use this for initialization
 	void Start () {
+
+		activated = false;
 
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-		if(Input.GetKeyDown(KeyCode.E))
+
+		NextDeliveryCountDown();
+
+	}
+
+	void NextDeliveryCountDown()
+	{
+		if(activated)
 		{
+			activated = false;
+			startTime = Time.time;
+			currentTime = Time.time;
+
+			nextDelivery = Random.Range(minTimeBetweenDeliveries, maxTimeBetweenDeliveries) + Time.time;
+
 			pickNewJob();
 		}
+
+		if(currentTime > nextDelivery)
+		{
+			activated = true;
+		}
+		currentTime = Time.time - startTime;
 	}
 
 	void pickNewJob()
@@ -35,10 +64,10 @@ public class JobSpawner : MonoBehaviour {
 		//decide pay based on item
 		//decide time frame based on item. (probably a pretty large time frame)
 		//send that data to spawn new job
-		int newItem = Random.Range(0,items.Length - 1);
+		int newItem = Random.Range(0,items.Length);
 
 		deliveryItem = items[newItem];
-		deliveryLocation = locations[Random.Range(0, locations.Length - 1)];
+		deliveryLocation = locations[Random.Range(0, locations.Length)];
 		deliveryPay = payments[newItem];
 		deliveryTimeFrame = 30f;
 

@@ -11,7 +11,7 @@ public class CameraFollow : MonoBehaviour {
 		public Vector2 maxXAndY;
 		public Vector2 minXAndY;
 
-		private Transform player;
+		public Transform player;
 		private Transform camera;
 		public Vector3 maxCameraPosition;
 		public Vector3 minCameraPosition;
@@ -19,7 +19,7 @@ public class CameraFollow : MonoBehaviour {
 
 		// Use this for initialization
 		void Start () {
-			player = GameObject.FindWithTag("Focus").transform;
+			//player = GameObject.FindWithTag("Focus").transform;
 			camera = GetComponent<Transform>();
 		}
 
