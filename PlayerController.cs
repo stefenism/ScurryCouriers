@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
-	private Rigidbody2D rb;
+	[HideInInspector]
+	public Rigidbody2D rb;
 	private Animator anim;
 
 	//private PlaySounds playSounds;
@@ -43,6 +44,8 @@ public class PlayerController : MonoBehaviour {
 
 	public SpriteRenderer exclamation;
 	public GameObject carryPosition;
+
+	public GameObject jumpDust;
 	// Use this for initialization
 	void Awake () {
 
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour {
 
 		//print(jumping + " jumping");
 		CheckInput();
+
 
 	}
 	void FixedUpdate()
@@ -162,6 +166,16 @@ public class PlayerController : MonoBehaviour {
 		if(Input.GetKey(KeyCode.Space) && jumpAllowed)
 		{
 			jumping = true;
+
+			if(grounded)
+			{
+				jumpDust.GetComponent<SpawnParticles>().play = true;
+			}
+			if(!grounded)
+			{
+				jumpDust.GetComponent<SpawnParticles>().play = false;
+			}
+			grounded = false;
 		}
 
 	}
@@ -205,6 +219,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Jump()
 	{
+
 		if(jumpDuration > 0f)
 		{
 			rb.AddForce(new Vector2(0f,1f * jumpForce), ForceMode2D.Impulse);

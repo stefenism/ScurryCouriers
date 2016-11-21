@@ -36,7 +36,18 @@ public class GroundDetect : MonoBehaviour {
 
 		if(hit.collider != null)
 		{
-			player.grounded = true;
+
+			if(hit.collider.gameObject.tag == "Ground" && (player.rb.velocity.y > 0))
+			{
+				player.grounded = false;
+			}
+
+			else
+			{
+				player.grounded = true;
+			}
+
+
 			/*
 			if(hit.collider.gameObject.tag != "Ground")
 			{
