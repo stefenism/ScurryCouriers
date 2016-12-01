@@ -5,9 +5,11 @@ using System.Collections.Generic;
 public class JobReceiver : MonoBehaviour {
 
 	public PlayerController player;
+	public PlayerWallet wallet;
 
 	public List<GameObject> items;
-	public List<float> payments;
+	public List<GameObject> clones;
+	public List<int> payments;
 	public List<float> deliveryTime;
 
 
@@ -19,10 +21,17 @@ public class JobReceiver : MonoBehaviour {
 	private bool activated;
 
 	private int itemreceived = 100;
+
+	public GameObject jobAlertPrefab;
+	public GameObject noticePosition;
+	private GameObject clone;
+
+
 	// Use this for initialization
 	void Start () {
 		items = new List<GameObject>();
-		payments = new List<float>();
+		clones = new List<GameObject>();
+		payments = new List<int>();
 		deliveryTime = new List<float>();
 
 		startTimes = new List<float>();
@@ -41,7 +50,7 @@ public class JobReceiver : MonoBehaviour {
 		}
 	}
 
-	public void AddToList(GameObject item, float payment, float time)
+	public void AddToList(GameObject item, int payment, float time)
 	{
 		items.Add(item);
 		payments.Add(payment);
@@ -63,6 +72,13 @@ public class JobReceiver : MonoBehaviour {
 			activated = false;
 			startTimes.Add(Time.time);
 			currentTimes.Add(Time.time);
+
+			clone = Instantiate(jobAlertPrefab, noticePosition.transform.position, Quaternion.identity) as GameObject;
+			clone.GetComponent<OffScreenNotifier>().originalPosition = noticePosition;
+
+			clones.Add(clone);
+			//clone.GetComponent<ParticleSystem>().enableEmission = true;
+			//transform.localScale = this.transform.parent.transform.localScale;
 		}
 
 		for(int i = 0; i < startTimes.Count; i++)
@@ -76,6 +92,9 @@ public class JobReceiver : MonoBehaviour {
 				deliveryTime.RemoveAt(i);
 				currentTimes.RemoveAt(i);
 				startTimes.RemoveAt(i);
+				Destroy(clones[i].transform.parent);
+				//Destroy(clones[i]);
+				clones.RemoveAt(i);
 			}
 		}
 	}
@@ -86,7 +105,7 @@ public class JobReceiver : MonoBehaviour {
 */
 	void CheckReceipt(string item)
 	{
-		for(int i = 0; i < items.Count; i++)
+		for(int i = 0; i < items.Count -1; i++)
 		{
 			print(i);
 			print("items.count: " + items.Count);
@@ -108,12 +127,16 @@ public class JobReceiver : MonoBehaviour {
 
 	void jobReceived(int position)
 	{
+		wallet.AddMoney(payments[position]);
+		Debug.Log(wallet.money + " dollars");
 
 		items.RemoveAt(position);
 		payments.RemoveAt(position);
 		deliveryTime.RemoveAt(position);
 		currentTimes.RemoveAt(position);
 		startTimes.RemoveAt(position);
+		Destroy(clones[position]);
+		clones.RemoveAt(position);
 
 		itemreceived = 100;
 		player.PickupPutdown();

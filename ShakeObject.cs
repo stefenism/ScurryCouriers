@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ShakeObject : MonoBehaviour {
 
-	private Vector3 originalPosition;
+	[HideInInspector]
+	public Vector3 originalPosition;
 	public GameObject shakeObject;
 
 	public float shakeAmt;

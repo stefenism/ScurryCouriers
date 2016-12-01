@@ -5,12 +5,12 @@ public class JobSpawner : MonoBehaviour {
 
 	public GameObject[] items;
 	public GameObject[] locations;
-	public float[] payments;
+	public int[] payments;
 
 
 	private GameObject deliveryItem;
 	private GameObject deliveryLocation;
-	private float deliveryPay;
+	private int deliveryPay;
 	private float deliveryTimeFrame;
 
 	public float maxTimeBetweenDeliveries;
@@ -74,7 +74,7 @@ public class JobSpawner : MonoBehaviour {
 		spawnNewJob(deliveryItem, deliveryLocation, deliveryPay, deliveryTimeFrame);
 	}
 
-	void spawnNewJob(GameObject item, GameObject location, float pay, float timeframe)
+	void spawnNewJob(GameObject item, GameObject location, int pay, float timeframe)
 	{
 		//add job items ("delivery" items above) to a job receiver script list.
 		//including item, location, pay, and timeframe
