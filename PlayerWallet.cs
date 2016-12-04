@@ -4,10 +4,12 @@ using System.Collections;
 public class PlayerWallet : MonoBehaviour {
 
 	public int money;
+	public UpdateMoney moneyUI;
 
 	// Use this for initialization
 	void Start () {
 
+		moneyUI.SetMoney(money);
 	}
 
 	// Update is called once per frame
@@ -18,5 +20,8 @@ public class PlayerWallet : MonoBehaviour {
 	public void AddMoney(int amt)
 	{
 		money += amt;
+
+		moneyUI.SetMoney(money);
+
 	}
 }

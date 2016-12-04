@@ -135,7 +135,7 @@ public class JobReceiver : MonoBehaviour {
 		deliveryTime.RemoveAt(position);
 		currentTimes.RemoveAt(position);
 		startTimes.RemoveAt(position);
-		Destroy(clones[position]);
+		Destroy(clones[position].transform.parent);
 		clones.RemoveAt(position);
 
 		itemreceived = 100;
