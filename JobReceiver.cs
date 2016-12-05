@@ -6,9 +6,12 @@ public class JobReceiver : MonoBehaviour {
 
 	public PlayerController player;
 	public PlayerWallet wallet;
+	public GenerateJobImage generateJobImage;
 
 	public List<GameObject> items;
 	public List<GameObject> clones;
+	public List<Sprite> itemImages;
+	public List<Sprite> destinationImages;
 	public List<int> payments;
 	public List<float> deliveryTime;
 
@@ -33,6 +36,8 @@ public class JobReceiver : MonoBehaviour {
 		clones = new List<GameObject>();
 		payments = new List<int>();
 		deliveryTime = new List<float>();
+		itemImages = new List<Sprite>();
+		destinationImages = new List<Sprite>();
 
 		startTimes = new List<float>();
 		currentTimes = new List<float>();
@@ -50,11 +55,14 @@ public class JobReceiver : MonoBehaviour {
 		}
 	}
 
-	public void AddToList(GameObject item, int payment, float time)
+	public void AddToList(GameObject item, int payment, float time, Sprite jobImage, Sprite destinationImage)
 	{
 		items.Add(item);
 		payments.Add(payment);
 		deliveryTime.Add(time);
+		//itemImages.Add(jobImage);
+		//destinationImages.Add(destinationImage);
+		generateJobImage.GenerateImageObject(jobImage, destinationImage);
 
 		StartTimer();
 	}
@@ -95,6 +103,7 @@ public class JobReceiver : MonoBehaviour {
 				Destroy(clones[i].transform.parent);
 				//Destroy(clones[i]);
 				clones.RemoveAt(i);
+				generateJobImage.RemoveJobDisplay(i);
 			}
 		}
 	}
@@ -137,6 +146,7 @@ public class JobReceiver : MonoBehaviour {
 		startTimes.RemoveAt(position);
 		Destroy(clones[position].transform.parent);
 		clones.RemoveAt(position);
+		generateJobImage.RemoveJobDisplay(position);
 
 		itemreceived = 100;
 		player.PickupPutdown();
