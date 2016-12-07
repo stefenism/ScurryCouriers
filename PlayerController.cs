@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 
 	private bool elevatorInteract;
 	private bool itemSpawnInteract;
+	private bool jobSpawnInteract;
 
 	private GameObject carryObject;
 	private GameObject carryObjectParent;
@@ -46,6 +47,9 @@ public class PlayerController : MonoBehaviour {
 	public GameObject carryPosition;
 
 	public GameObject jumpDust;
+
+	public ActiveJobPanel jobPanel;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -67,6 +71,7 @@ public class PlayerController : MonoBehaviour {
 
 		elevatorInteract = false;
 		itemSpawnInteract = false;
+		jobSpawnInteract = false;
 
 		maxVelocity = maxSpeed;
 	}
@@ -128,6 +133,11 @@ public class PlayerController : MonoBehaviour {
 		if(itemSpawnInteract)
 		{
 			Spawn();
+		}
+
+		if(jobSpawnInteract)
+		{
+			SpawnJobDisplay();
 		}
 
 		if(moveDir > 0 && !facingRight)
@@ -286,6 +296,18 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void SpawnJobDisplay()
+	{
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			if(jobPanel.currentJobs != null)
+			{
+				jobPanel.activated = true;
+			}
+		}
+
+	}
+
 	void OnTriggerEnter2D(Collider2D collision)
 	{
 		if(collision.gameObject.tag == "Food" || collision.gameObject.tag == "Water"
@@ -306,6 +328,14 @@ public class PlayerController : MonoBehaviour {
 		{
 			exclamation.enabled = true;
 			interactObject = collision.gameObject;
+		}
+
+		if(collision.gameObject.tag == "Bossy")
+		{
+			exclamation.enabled = true;
+			interactObject = collision.gameObject;
+			canJump = false;
+			jobSpawnInteract = true;
 		}
 
 		if(collision.gameObject.tag == "Lever")
@@ -344,6 +374,14 @@ public class PlayerController : MonoBehaviour {
 		{
 			exclamation.enabled = false;
 			interactObject = null;
+		}
+
+		if(collision.gameObject.tag == "Bossy")
+		{
+			exclamation.enabled = false;
+			interactObject = null;
+			canJump = true;
+			jobSpawnInteract = false;
 		}
 
 		if(collision.gameObject.tag == "Lever")

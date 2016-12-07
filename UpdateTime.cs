@@ -44,7 +44,7 @@ public class UpdateTime : MonoBehaviour {
 		void UpdateTimer()
 		{
 
-		    TimeText.text = "Time Left: " + TimeOutput;
+		    TimeText.text = TimeOutput;
 
 		}
 

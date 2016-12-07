@@ -152,6 +152,12 @@ public class JobReceiver : MonoBehaviour {
 		player.PickupPutdown();
 	}
 
+	public void DestroyNotice(int position)
+	{
+		Destroy(clones[position].transform.parent);
+		clones.RemoveAt(position);
+	}
+
 	void OnTriggerEnter2D(Collider2D collision)
 	{
 		CheckReceipt(collision.gameObject.tag);

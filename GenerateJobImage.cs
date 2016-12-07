@@ -20,12 +20,16 @@ public class GenerateJobImage : MonoBehaviour {
 	public GameObject[] positions;
 	public List<GameObject> clones;
 
+	private ActiveJobPanel jobPanel;
+
 
 
 	// Use this for initialization
 	void Start () {
 
 		clones = new List<GameObject>();
+
+		jobPanel = GetComponent<ActiveJobPanel>();
 	}
 
 	// Update is called once per frame
@@ -50,12 +54,17 @@ public class GenerateJobImage : MonoBehaviour {
 		destination = clone.GetComponent<GrabChildren>().jobDestination.GetComponent<SpriteRenderer>();
 
 		GenerateImage(jobItem, jobDestination);
+
+		jobPanel.currentJobs.Add(clone);
 	}
 
 	public void RemoveJobDisplay(int position)
 	{
 		Destroy(clones[position]);
 		clones.RemoveAt(position);
+
+		Destroy(jobPanel.currentJobs[position]);
+		jobPanel.currentJobs.RemoveAt(position);
 	}
 
 }
