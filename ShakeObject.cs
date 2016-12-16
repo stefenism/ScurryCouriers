@@ -20,7 +20,7 @@ public class ShakeObject : MonoBehaviour {
 		newShake = true;
 		shake = false;
 
-		originalPosition = shakeObject.transform.position;
+		//originalPosition = shakeObject.transform.position;
 	}
 
 	// Update is called once per frame

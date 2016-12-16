@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
 
@@ -300,7 +301,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			if(jobPanel.currentJobs != null)
+			if(jobPanel.currentJobs.Count > 0);// != null)
 			{
 				jobPanel.activated = true;
 			}

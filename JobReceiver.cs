@@ -154,7 +154,7 @@ public class JobReceiver : MonoBehaviour {
 
 	public void DestroyNotice(int position)
 	{
-		Destroy(clones[position].transform.parent);
+		Destroy(clones[position]);//.transform.parent);
 		clones.RemoveAt(position);
 	}
 

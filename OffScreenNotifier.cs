@@ -28,7 +28,7 @@ public class OffScreenNotifier : MonoBehaviour {
 
 		if(screenPos.x >= 0 && screenPos.x <= 1 && screenPos.y >= 0 && screenPos.y <= 1)
 		{
-			Debug.Log("already on screen");
+			//Debug.Log("already on screen");
 			transform.position = originalPosition.transform.position;
 			shakeObject.GetComponent<ShakeObject>().originalPosition = transform.position;
 		}
@@ -65,6 +65,6 @@ public class OffScreenNotifier : MonoBehaviour {
 		//displayPosition = camera.ScreenToWorldPoint(OnScreenPos);
 		transform.position = camera.ViewportToWorldPoint(OnScreenPos);
 		shakeObject.GetComponent<ShakeObject>().originalPosition = transform.position;
-		Debug.Log(OnScreenPos);
+		//Debug.Log(OnScreenPos);
 	}
 }

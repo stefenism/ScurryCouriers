@@ -65,6 +65,7 @@ public class GenerateJobImage : MonoBehaviour {
 
 		Destroy(jobPanel.currentJobs[position]);
 		jobPanel.currentJobs.RemoveAt(position);
+
 	}
 
 }
