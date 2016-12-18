@@ -6,11 +6,13 @@ public class ActiveJobPanel : MonoBehaviour {
 
 	public GameObject[] positions;
 	public List<GameObject> currentJobs;
+	public List<GameObject> activeJobs;
 	public JobReceiver jobReceiver;
+
 
 	[HideInInspector]
 	public bool activated;
-
+	/*
 	private bool startLerp;
 	public GameObject lerpObject;
 
@@ -21,22 +23,28 @@ public class ActiveJobPanel : MonoBehaviour {
 	private Vector3 newPos;
 
 	private bool moving;
+	*/
 
 	// Use this for initialization
 	void Start () {
 		currentJobs = new List<GameObject>();
-		startLerp = false;
-		moving = false;
+		activeJobs = new List<GameObject>();
+		//startLerp = false;
+		//moving = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
 
-		if(activated)
+	if(activated)
 		{
 			MoveJobOver();
 		}
+	}
 
+	void FixedUpdate()
+	{
+		/*
 		if(startLerp)
 		{
 			moving = true;
@@ -46,7 +54,9 @@ public class ActiveJobPanel : MonoBehaviour {
 		{
 			LerpJob();
 		}
+		*/
 	}
+
 
 	void MoveJobOver()
 	{
@@ -54,15 +64,25 @@ public class ActiveJobPanel : MonoBehaviour {
 
 		for(int i = 0; i < currentJobs.Count; i++)
 		{
-			if(currentJobs[i].transform.position != positions[i].transform.position)
+			if(currentJobs[i].transform.position != positions[activeJobs.Count].transform.position)
 			{
 				//currentJobs[i].transform.position = positions[i].transform.position;
-				lerpObject = currentJobs[i].gameObject;
-				newPos = positions[i].transform.position;
+				//lerpObject = currentJobs[i].gameObject;
+				//newPos = positions[activeJobs.Count].transform.position;
 
-				startLerp = true;
+				//startLerp = true;
 
-				jobReceiver.DestroyNotice(0);
+				currentJobs[i].gameObject.GetComponent<LerpObject>().newPos = positions[activeJobs.Count].transform.position;
+				currentJobs[i].gameObject.GetComponent<LerpObject>().startLerp = true;
+
+				if(jobReceiver.clones.Count > 0)
+				{
+					jobReceiver.DestroyNotice(0);
+				}
+
+				activeJobs.Add(currentJobs[i].gameObject);
+				currentJobs.RemoveAt(i);
+
 
 				i += positions.Length;
 			}
@@ -70,6 +90,23 @@ public class ActiveJobPanel : MonoBehaviour {
 
 	}
 
+
+	public void MoveAllJobsOver()
+	{
+		for(int i = 0; i < activeJobs.Count; i++)
+		{
+			activeJobs[i].gameObject.GetComponent<LerpObject>().newPos = positions[i].transform.position;
+			activeJobs[i].gameObject.GetComponent<LerpObject>().startLerp = true;
+
+
+			//lerpObject = activeJobs[i].gameObject;
+			//newPos = positions[i].transform.position;
+
+			//startLerp = true;
+		}
+	}
+
+	/*
 	void LerpJob()
 	{
 
@@ -85,6 +122,7 @@ public class ActiveJobPanel : MonoBehaviour {
 
 		float timeSinceStarted = Time.time - timeStarted;
 		float percentComplete = timeSinceStarted / movementTime;
+		//float percentComplete = Mathf.Abs(lerpObject.transform.position.x) / Mathf.Abs(newPos.x);
 
 		lerpObject.transform.position = new Vector3(Mathf.Lerp(startPos.x, newPos.x, percentComplete), lerpObject.transform.position.y, 0f);// , Mathf.Lerp(startPos.y, newPos.y, percentComplete), 0f);
 
@@ -95,4 +133,6 @@ public class ActiveJobPanel : MonoBehaviour {
 		}
 
 	}
+
+	*/
 }
