@@ -73,7 +73,9 @@ public class ActiveJobPanel : MonoBehaviour {
 				//startLerp = true;
 
 				currentJobs[i].gameObject.GetComponent<LerpObject>().newPos = positions[activeJobs.Count].transform.position;
+				currentJobs[i].gameObject.GetComponent<LerpObject>().newPosArrayPosition = activeJobs.Count;
 				currentJobs[i].gameObject.GetComponent<LerpObject>().startLerp = true;
+				currentJobs[i].gameObject.transform.parent = this.gameObject.transform;
 
 				if(jobReceiver.clones.Count > 0)
 				{
@@ -96,6 +98,7 @@ public class ActiveJobPanel : MonoBehaviour {
 		for(int i = 0; i < activeJobs.Count; i++)
 		{
 			activeJobs[i].gameObject.GetComponent<LerpObject>().newPos = positions[i].transform.position;
+			activeJobs[i].gameObject.GetComponent<LerpObject>().newPosArrayPosition = i;
 			activeJobs[i].gameObject.GetComponent<LerpObject>().startLerp = true;
 
 

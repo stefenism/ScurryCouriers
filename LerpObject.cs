@@ -7,13 +7,17 @@ public class LerpObject : MonoBehaviour {
 
 	private Vector3 startPos;
 	public Vector3 newPos;
+	public int newPosArrayPosition;
 	public float movementTime;
+	public float speed;
 
 	private float timeStarted;
 	private float timeSinceStarted;
 
 	private bool moving;
 	public bool startLerp;
+
+	private ActiveJobPanel jobPanel;
 
 	[HideInInspector]
 	public bool activated;
@@ -35,6 +39,7 @@ public class LerpObject : MonoBehaviour {
 		if(startLerp)
 		{
 			moving = true;
+			jobPanel = transform.parent.GetComponent<ActiveJobPanel>();
 		}
 
 		if(moving)
@@ -75,6 +80,8 @@ public class LerpObject : MonoBehaviour {
 	void LerpJob()
 	{
 
+		newPos = jobPanel.positions[newPosArrayPosition].transform.position;
+
 		if(startLerp)
 		{
 			timeStarted = Time.time;
@@ -89,7 +96,7 @@ public class LerpObject : MonoBehaviour {
 		float percentComplete = timeSinceStarted / movementTime;
 		//float percentComplete = Mathf.Abs(lerpObject.transform.position.x) / Mathf.Abs(newPos.x);
 
-		transform.position = new Vector3(Mathf.Lerp(startPos.x, newPos.x, percentComplete), transform.position.y, 0f);// , Mathf.Lerp(startPos.y, newPos.y, percentComplete), 0f);
+		transform.position = new Vector3(Mathf.Lerp(startPos.x, newPos.x, speed * percentComplete), transform.position.y, 0f);// , Mathf.Lerp(startPos.y, newPos.y, percentComplete), 0f);
 
 		if(percentComplete >= 1.0f)
 		{
