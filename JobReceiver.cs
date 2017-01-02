@@ -102,9 +102,11 @@ public class JobReceiver : MonoBehaviour {
 				startTimes.RemoveAt(i);
 				if(clones.Count > 0)
 				{
-					Destroy(clones[i].transform.parent);
+					//Destroy(clones[i].transform.parent);
+					//Destroy(clones[i].gameObject);
 					//Destroy(clones[i]);
-					clones.RemoveAt(i);
+					//clones.RemoveAt(i);
+					DestroyNotice(i);
 				}
 
 				generateJobImage.RemoveJobDisplay(i);

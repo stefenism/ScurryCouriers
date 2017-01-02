@@ -355,6 +355,30 @@ public class PlayerController : MonoBehaviour {
 			canJump = false;
 		}
 
+		if(collision.gameObject.tag == "HoneyHive")
+		{
+			exclamation.enabled = true;
+			//interactObject = collision.gameObject;
+			//itemSpawnInteract = true;
+			canJump = false;
+		}
+
+		if(collision.gameObject.tag == "RamenShop")
+		{
+			exclamation.enabled = true;
+			//interactObject = collision.gameObject;
+			//itemSpawnInteract = true;
+			canJump = false;
+		}
+
+		if(collision.gameObject.tag == "Desk")
+		{
+			exclamation.enabled = true;
+			//interactObject = collision.gameObject;
+			//itemSpawnInteract = true;
+			canJump = false;
+		}
+
 	}
 
 	void OnTriggerExit2D(Collider2D collision)
@@ -398,6 +422,30 @@ public class PlayerController : MonoBehaviour {
 			exclamation.enabled = false;
 			interactObject = null;
 			itemSpawnInteract = false;
+			canJump = true;
+		}
+
+		if(collision.gameObject.tag == "HoneyHive")
+		{
+			exclamation.enabled = false;
+			//interactObject = collision.gameObject;
+			//itemSpawnInteract = true;
+			canJump = true;
+		}
+
+		if(collision.gameObject.tag == "RamenShop")
+		{
+			exclamation.enabled = false;
+			//interactObject = collision.gameObject;
+			//itemSpawnInteract = true;
+			canJump = true;
+		}
+
+		if(collision.gameObject.tag == "Desk")
+		{
+			exclamation.enabled = false;
+			//interactObject = collision.gameObject;
+			//itemSpawnInteract = true;
 			canJump = true;
 		}
 	}
