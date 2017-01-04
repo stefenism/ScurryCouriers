@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour {
 
 	public ActiveJobPanel jobPanel;
 
+	private CameraPan cameraPan;
+
 	// Use this for initialization
 	void Awake () {
 
@@ -377,6 +379,12 @@ public class PlayerController : MonoBehaviour {
 			//interactObject = collision.gameObject;
 			//itemSpawnInteract = true;
 			canJump = false;
+		}
+
+		if(collision.gameObject.tag == "RoomTrigger")
+		{
+			cameraPan = collision.gameObject.transform.parent.gameObject.GetComponent<CameraPan>();
+			cameraPan.enabled = true;
 		}
 
 	}
