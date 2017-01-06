@@ -385,6 +385,21 @@ public class PlayerController : MonoBehaviour {
 		{
 			cameraPan = collision.gameObject.transform.parent.gameObject.GetComponent<CameraPan>();
 			cameraPan.enabled = true;
+			Debug.Log("enabled: " + cameraPan.enabled);
+		}
+		if(collision.gameObject.tag == "Disabler")
+		{
+			cameraPan = collision.gameObject.transform.parent.gameObject.GetComponent<CameraPan>();
+			if(collision.gameObject.name == "InDisabler")
+			{
+				cameraPan.inside.SetActive(true);
+				cameraPan.outside.SetActive(false);
+			}
+			if(collision.gameObject.name == "OutDisabler")
+			{
+				cameraPan.inside.SetActive(false);
+				cameraPan.outside.SetActive(true);
+			}
 		}
 
 	}
