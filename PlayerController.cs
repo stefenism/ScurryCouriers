@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour {
 
 	public ActiveJobPanel jobPanel;
 
-	private CameraPan cameraPan;
+	public CameraPan cameraPan;
 
 	// Use this for initialization
 	void Awake () {
@@ -313,6 +313,8 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
+
+		Debug.Log("collision object: " + collision.gameObject.tag);
 		if(collision.gameObject.tag == "Food" || collision.gameObject.tag == "Water"
 			|| collision.gameObject.tag == "Honey")
 		{
@@ -383,10 +385,24 @@ public class PlayerController : MonoBehaviour {
 
 		if(collision.gameObject.tag == "RoomTrigger")
 		{
-			cameraPan = collision.gameObject.transform.parent.gameObject.GetComponent<CameraPan>();
-			cameraPan.enabled = true;
-			Debug.Log("enabled: " + cameraPan.enabled);
+			//cameraPan = collision.gameObject.transform.parent.gameObject.GetComponent<CameraPan>();
+			//cameraPan.enabled = true;
+			//Debug.Log("enabled: " + cameraPan.enabled);
+
+			if(collision.gameObject.name == "LeftBorder")
+			{
+				//set min to outside min, set max to leftborder position
+				cameraPan.enabled = true;
+				cameraPan.leftSide = true;
+			}
+			if(collision.gameObject.name == "RightBorder")
+			{
+				//set min to RightBorder pos, set max to outside max
+				cameraPan.enabled = true;
+				cameraPan.rightSide = true;
+			}
 		}
+		/*
 		if(collision.gameObject.tag == "Disabler")
 		{
 			cameraPan = collision.gameObject.transform.parent.gameObject.GetComponent<CameraPan>();
@@ -401,6 +417,7 @@ public class PlayerController : MonoBehaviour {
 				cameraPan.outside.SetActive(true);
 			}
 		}
+		*/
 
 	}
 

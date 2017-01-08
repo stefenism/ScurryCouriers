@@ -4,14 +4,25 @@ using System.Collections;
 public class CameraPan : MonoBehaviour {
 
 	public bool enabled;
+	public GameObject rightBorderTrigger;
+	public GameObject leftBorderTrigger;
 
-	public GameObject focalPoint;
-	public GameObject inside;
-	public GameObject outside;
-	public GameObject outsideDisabler;
-	public GameObject insideDisabler;
+	[HideInInspector]
+	public bool leftSide;
+	[HideInInspector]
+	public bool rightSide;
+	[HideInInspector]
+	public bool middle = true;
+
+	private bool cameraMoving = false;
+
+	//public GameObject focalPoint;
+	//public GameObject inside;
+	//public GameObject outside;
+	//public GameObject outsideDisabler;
+	//public GameObject insideDisabler;
 	public PlayerController player;
-	public GameObject playerFocalPoint;
+	//public GameObject playerFocalPoint;
 
 	private CameraFollow camera;
 
@@ -30,7 +41,15 @@ public class CameraPan : MonoBehaviour {
 
 		if(enabled)
 		{
-			Debug.Log("Camera Focus: " + camera.player);
+
+			if(camera.minXAndY.x == minBounds.x)
+			{
+				middle = true;
+			}
+			else
+			{
+				middle = false;
+			}
 			enabled = false;
 			PanCamera();
 
@@ -40,29 +59,62 @@ public class CameraPan : MonoBehaviour {
 
 	void PanCamera()
 	{
-		//remove player gravity
-		//change camera focal point
-		//change camera bounds
-		//start lerp on player and camera?
+		StartCoroutine(lerpBounds(1f));
+	}
 
-		if(camera.player == playerFocalPoint.transform)
+	private IEnumerator lerpBounds(float timeToFinish)
+	{
+		float runTime = 0;
+		float timer = 0;
+		float tempDeltaTime;
+
+		cameraMoving = true;
+
+		while(timer<timeToFinish)
 		{
-			camera.maxXAndY = new Vector2(outerBounds.y, maxBounds.y);
-			camera.minXAndY = new Vector2(outerBounds.x, minBounds.y);
-			camera.player = focalPoint.transform;
+			if(rightSide)// && (camera.minXAndY.x == -3.28f))
+			{
+				leftBorderTrigger.SetActive(false);
+				rightBorderTrigger.SetActive(false);
+				if(middle)//camera.minXAndY.x >= -3.28f && middle)
+				{
+					camera.minXAndY = Vector2.Lerp(camera.minXAndY, new Vector2 (outerBounds.y -1, minBounds.y), runTime);
+					camera.maxXAndY = Vector2.Lerp(camera.maxXAndY, new Vector2(outerBounds.y, maxBounds.y), runTime);
+				}
+				else
+				{
+					camera.minXAndY = Vector2.Lerp(camera.minXAndY, new Vector2(minBounds.x, minBounds.y), runTime);
+					camera.maxXAndY = Vector2.Lerp(camera.maxXAndY, new Vector2(maxBounds.x, maxBounds.y), runTime);
+				}
+			}
+			if(leftSide)
+			{
+				leftBorderTrigger.SetActive(false);
+				rightBorderTrigger.SetActive(false);
+				if(middle)//camera.minXAndY.x == -3.28f)
+				{
+					camera.minXAndY = Vector2.Lerp(camera.minXAndY, new Vector2 (outerBounds.x, minBounds.y), runTime);
+					camera.maxXAndY = Vector2.Lerp(camera.maxXAndY, new Vector2(outerBounds.x + 1, maxBounds.y), runTime);
+				}
+				else
+				{
+					camera.minXAndY = Vector2.Lerp(camera.minXAndY, new Vector2(minBounds.x, minBounds.y), runTime);
+					camera.maxXAndY = Vector2.Lerp(camera.maxXAndY, new Vector2(maxBounds.x, maxBounds.y), runTime);
+				}
+			}
+
+			tempDeltaTime = Time.deltaTime;
+			runTime += tempDeltaTime / timeToFinish;
+			timer += tempDeltaTime;
+			yield return null;
 		}
 
-		else if(camera.player == focalPoint.transform)
-		{
-			camera.maxXAndY = new Vector2(maxBounds.x, maxBounds.y);
-			camera.minXAndY = new Vector2(minBounds.x, minBounds.y);
-			camera.player = playerFocalPoint.transform;
-		}
-
-
-		Debug.Log("is camera on playerFocalPoint: " + (camera.player == playerFocalPoint.transform));
-		Debug.Log("is camera on FocalPoint: " + (camera.player == focalPoint.transform));
-
+		leftSide = false;
+		rightSide = false;
+		leftBorderTrigger.SetActive(true);
+		rightBorderTrigger.SetActive(true);
+		cameraMoving = false;
 
 	}
+
 }
