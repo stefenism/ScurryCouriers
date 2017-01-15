@@ -362,16 +362,16 @@ public class PlayerController : MonoBehaviour {
 		if(collision.gameObject.tag == "HoneyHive")
 		{
 			exclamation.enabled = true;
-			//interactObject = collision.gameObject;
-			//itemSpawnInteract = true;
+			interactObject = collision.gameObject;
+			itemSpawnInteract = true;
 			canJump = false;
 		}
 
 		if(collision.gameObject.tag == "RamenShop")
 		{
 			exclamation.enabled = true;
-			//interactObject = collision.gameObject;
-			//itemSpawnInteract = true;
+			interactObject = collision.gameObject;
+			itemSpawnInteract = true;
 			canJump = false;
 		}
 
@@ -468,24 +468,24 @@ public class PlayerController : MonoBehaviour {
 		if(collision.gameObject.tag == "HoneyHive")
 		{
 			exclamation.enabled = false;
-			//interactObject = collision.gameObject;
-			//itemSpawnInteract = true;
+			interactObject = null;
+			itemSpawnInteract = false;
 			canJump = true;
 		}
 
 		if(collision.gameObject.tag == "RamenShop")
 		{
 			exclamation.enabled = false;
-			//interactObject = collision.gameObject;
-			//itemSpawnInteract = true;
+			interactObject = null;
+			itemSpawnInteract = false;
 			canJump = true;
 		}
 
 		if(collision.gameObject.tag == "Desk")
 		{
 			exclamation.enabled = false;
-			//interactObject = collision.gameObject;
-			//itemSpawnInteract = true;
+			//interactObject = null;
+			//itemSpawnInteract = false;
 			canJump = true;
 		}
 	}
