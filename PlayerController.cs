@@ -262,6 +262,7 @@ public class PlayerController : MonoBehaviour {
 			StartCoroutine(DropWait());
 			maxVelocity = maxSpeed;
 			speed = maxSpeed;
+			carryObjectParent.GetComponent<MovePickupParent>().enabled = false;
 			carryObject.transform.parent = carryObjectParent.transform;
 			carryObject.tag = interactObjectTag;
 		}
@@ -275,6 +276,7 @@ public class PlayerController : MonoBehaviour {
 			}
 			holding = true;
 			carryObjectParent = carryObject.transform.parent.gameObject;
+			carryObjectParent.GetComponent<MovePickupParent>().enabled = true;
 			carryObject.transform.parent = transform;
 			carryObject.transform.position = carryPosition.transform.position;
 			interactObjectTag = carryObject.tag;
