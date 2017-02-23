@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 	private bool facingRight;
 	private bool jumping;
 	private bool canCarry;
+	private bool canBackpack;
 	private bool canJump;
 	private bool jumpAllowed;
 	private bool dropAllowed;
@@ -29,6 +30,11 @@ public class PlayerController : MonoBehaviour {
 
 	private GameObject carryObject;
 	private GameObject carryObjectParent;
+
+	public List<GameObject> backPack;
+	private GameObject backPackObject;
+	private Sprite backPackImage;
+	public GameObject backPackDisplay;
 
 	private GameObject interactObject;
 	private string interactObjectTag;
@@ -61,11 +67,14 @@ public class PlayerController : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		//playSounds = GetComponent<PlaySounds>();
 
+		backPack = new List<GameObject>();
+
 		grounded = false;
 		landed = false;
 		canControl = true;
 		facingRight = true;
 		canCarry = false;
+		canBackpack = false;
 		canJump = true;
 		jumpAllowed = true;
 		dropAllowed = true;
@@ -117,7 +126,7 @@ public class PlayerController : MonoBehaviour {
 			JumpButton();
 		}
 
-		if(canCarry)
+		if(canCarry || canBackpack)
 		{
 
 			CarryButton();
@@ -220,7 +229,15 @@ public class PlayerController : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
 			interact = true;
-			PickupPutdown();
+			if(canBackpack)
+			{
+				BackPack();
+			}
+			if(canCarry)
+			{
+				PickupPutdown();
+			}
+			//PickupPutdown();
 		}
 		if(Input.GetKeyUp(KeyCode.Space))
 		{
@@ -284,6 +301,18 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	public void BackPack()
+	{
+		if(backPack != null)
+		{
+			backPack.Add(backPackObject.transform.parent.gameObject);
+			backPackObject.SetActive(false);
+			backPackImage = backPackObject.transform.parent.GetComponent<SpriteRenderer>().sprite;
+			backPackDisplay.GetComponent<UpdateBackpackImage>().UpdateImage(backPackImage);
+			//Destroy(carryObject.transform.parent.gameObject);
+		}
+	}
+
 	void Elevator()
 	{
 
@@ -317,7 +346,7 @@ public class PlayerController : MonoBehaviour {
 	{
 
 		Debug.Log("collision object: " + collision.gameObject.tag);
-		if(collision.gameObject.tag == "Food" || collision.gameObject.tag == "Water"
+		if(collision.gameObject.tag == "Water"
 			|| collision.gameObject.tag == "Honey")
 		{
 				exclamation.enabled = true;
@@ -329,6 +358,13 @@ public class PlayerController : MonoBehaviour {
 					carryObject = collision.gameObject;
 				}
 
+		}
+
+		if(collision.gameObject.tag == "Food")
+		{
+			exclamation.enabled = true;
+			canBackpack = true;
+			backPackObject = collision.gameObject;
 		}
 
 		if(collision.gameObject.tag == "ShopRat")
@@ -425,7 +461,7 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D collision)
 	{
-		if(collision.gameObject.tag == "Food" || collision.gameObject.tag == "Water"
+		if(collision.gameObject.tag == "Water"
 			|| collision.gameObject.tag == "Honey")
 		{
 				exclamation.enabled = false;
@@ -435,6 +471,12 @@ public class PlayerController : MonoBehaviour {
 					canCarry = false;
 					canJump = true;
 				}
+		}
+
+		if(collision.gameObject.tag == "Food")
+		{
+			exclamation.enabled = false;
+			canBackpack = false;
 		}
 
 		if(collision.gameObject.tag == "ShopRat")
