@@ -14,6 +14,7 @@ public class JobSpawner : MonoBehaviour {
 	private GameObject deliveryLocation;
 	private int deliveryPay;
 	private float deliveryTimeFrame;
+	public float deliveryTimeAllotted;
 	private Sprite itemImage;
 	private Sprite destinationImage;
 
@@ -73,7 +74,7 @@ public class JobSpawner : MonoBehaviour {
 		deliveryItem = items[newItem];
 		deliveryLocation = locations[Random.Range(0, locations.Length)];
 		deliveryPay = payments[newItem];
-		deliveryTimeFrame = 30f;
+		deliveryTimeFrame = deliveryTimeAllotted;
 		itemImage = itemImages[newItem];
 		destinationImage = destinationImages[Random.Range(0, destinationImages.Length)];
 

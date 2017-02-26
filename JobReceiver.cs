@@ -8,6 +8,7 @@ public class JobReceiver : MonoBehaviour {
 	public PlayerWallet wallet;
 	public GenerateJobImage generateJobImage;
 
+	[Header("Items currently desired to be delivered")]
 	public List<GameObject> items;
 	public List<GameObject> clones;
 	public List<Sprite> itemImages;
@@ -28,6 +29,7 @@ public class JobReceiver : MonoBehaviour {
 	public GameObject jobAlertPrefab;
 	public GameObject noticePosition;
 	private GameObject clone;
+	private GameObject itemInQuestion;
 
 
 	// Use this for initialization
@@ -120,7 +122,7 @@ public class JobReceiver : MonoBehaviour {
 */
 	void CheckReceipt(string item)
 	{
-		for(int i = 0; i < items.Count -1; i++)
+		for(int i = 0; i < items.Count; i++)
 		{
 			print(i);
 			print("items.count: " + items.Count);
@@ -128,11 +130,32 @@ public class JobReceiver : MonoBehaviour {
 			{
 				i = items.Count;
 			}
-			if(items[i].gameObject.tag == item)
+
+			if(player.backPack.Count != 0)
 			{
-				received = true;
-				itemreceived = i;
+				for(int j = 0; j < player.backPack.Count; j++)
+				{
+					if(items[i].gameObject.tag == player.backPack[j].gameObject.tag)
+					{
+						received = true;
+						itemreceived = i;
+						itemInQuestion = player.backPack[j].gameObject;
+					}
+				}
+
 			}
+
+			if(items.Count != 0)
+			{
+				if(items[i].gameObject.tag == item)
+				{
+					received = true;
+					itemreceived = i;
+				}
+			}
+
+
+
 			else
 			{
 				Debug.Log("failed");
@@ -150,12 +173,13 @@ public class JobReceiver : MonoBehaviour {
 		deliveryTime.RemoveAt(position);
 		currentTimes.RemoveAt(position);
 		startTimes.RemoveAt(position);
-		Destroy(clones[position].transform.parent);
-		clones.RemoveAt(position);
+
 		generateJobImage.RemoveJobDisplay(position);
 
 		itemreceived = 100;
 		player.PickupPutdown();
+		//clones.RemoveAt(position);
+		//Destroy(clones[position].transform.parent);
 	}
 
 	public void DestroyNotice(int position)
@@ -166,12 +190,13 @@ public class JobReceiver : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
-		CheckReceipt(collision.gameObject.tag);
+		itemInQuestion = collision.gameObject;
+		CheckReceipt(itemInQuestion.gameObject.tag);
 
 		if(received)
 		{
 			Debug.Log("received");
-			Destroy(collision.gameObject);
+			Destroy(itemInQuestion);
 			received = false;
 
 			jobReceived(itemreceived);

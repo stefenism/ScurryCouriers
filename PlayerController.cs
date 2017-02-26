@@ -231,6 +231,7 @@ public class PlayerController : MonoBehaviour {
 			interact = true;
 			if(canBackpack)
 			{
+				canBackpack = false;
 				BackPack();
 			}
 			if(canCarry)
@@ -306,7 +307,7 @@ public class PlayerController : MonoBehaviour {
 		if(backPack != null)
 		{
 			backPack.Add(backPackObject.transform.parent.gameObject);
-			backPackObject.SetActive(false);
+			backPackObject.transform.parent.gameObject.SetActive(false);
 			backPackImage = backPackObject.transform.parent.GetComponent<SpriteRenderer>().sprite;
 			backPackDisplay.GetComponent<UpdateBackpackImage>().UpdateImage(backPackImage);
 			//Destroy(carryObject.transform.parent.gameObject);
@@ -345,7 +346,7 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collision)
 	{
 
-		Debug.Log("collision object: " + collision.gameObject.tag);
+		//Debug.Log("collision object: " + collision.gameObject.tag);
 		if(collision.gameObject.tag == "Water"
 			|| collision.gameObject.tag == "Honey")
 		{
