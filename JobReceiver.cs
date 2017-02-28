@@ -55,6 +55,15 @@ public class JobReceiver : MonoBehaviour {
 		{
 			JobStart();
 		}
+
+		if(received)
+		{
+			Debug.Log("received");
+			Destroy(itemInQuestion);
+			received = false;
+
+			jobReceived(itemreceived);
+		}
 	}
 
 	public void AddToList(GameObject item, int payment, float time, Sprite jobImage, Sprite destinationImage)
@@ -124,39 +133,55 @@ public class JobReceiver : MonoBehaviour {
 	{
 		for(int i = 0; i < items.Count; i++)
 		{
-			print(i);
-			print("items.count: " + items.Count);
+
+
 			if(received)
 			{
 				i = items.Count;
 			}
 
-			if(player.backPack.Count != 0)
+			if(player.backPack.Count != 0 && items.Count != 0)
 			{
+
+				print("index: " + i);
+				print("items.count: " + items.Count);
+				Debug.Log("backpack.count: " + player.backPack.Count);
+				Debug.Log("current item check: " + items[i].gameObject);
+
 				for(int j = 0; j < player.backPack.Count; j++)
 				{
+					Debug.Log("backpack item: " + player.backPack[j].gameObject);
 					if(items[i].gameObject.tag == player.backPack[j].gameObject.tag)
 					{
 						received = true;
 						itemreceived = i;
 						itemInQuestion = player.backPack[j].gameObject;
+						player.ClearBackPack(j);
+						j = player.backPack.Count;
 					}
 				}
 
+				if(items[i].gameObject.tag == item)
+				{
+					received = true;
+					itemreceived = i;
+					itemInQuestion = player.carryObject;//items[i].gameObject;
+				}
 			}
 
-			if(items.Count != 0)
+			if(items.Count != 0 && player.backPack.Count == 0)
 			{
 				if(items[i].gameObject.tag == item)
 				{
 					received = true;
 					itemreceived = i;
+					itemInQuestion = player.carryObject;//items[i].gameObject;
 				}
 			}
 
 
 
-			else
+			else if(i + 1 >= items.Count)
 			{
 				Debug.Log("failed");
 			}
@@ -178,8 +203,10 @@ public class JobReceiver : MonoBehaviour {
 
 		itemreceived = 100;
 		player.PickupPutdown();
-		//clones.RemoveAt(position);
+		Destroy(itemInQuestion.transform.parent.gameObject);
 		//Destroy(clones[position].transform.parent);
+		//clones.RemoveAt(position);
+
 	}
 
 	public void DestroyNotice(int position)
@@ -190,16 +217,8 @@ public class JobReceiver : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
-		itemInQuestion = collision.gameObject;
-		CheckReceipt(itemInQuestion.gameObject.tag);
-
-		if(received)
-		{
-			Debug.Log("received");
-			Destroy(itemInQuestion);
-			received = false;
-
-			jobReceived(itemreceived);
-		}
+		//itemInQuestion = collision.gameObject;
+		//Debug.Log("iteminquestion: " + itemInQuestion.gameObject);
+		CheckReceipt(collision.gameObject.tag);
 	}
 }

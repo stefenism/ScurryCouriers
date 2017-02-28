@@ -28,12 +28,14 @@ public class PlayerController : MonoBehaviour {
 	private bool itemSpawnInteract;
 	private bool jobSpawnInteract;
 
-	private GameObject carryObject;
+	[HideInInspector]
+	public GameObject carryObject;
 	private GameObject carryObjectParent;
 
 	public List<GameObject> backPack;
 	private GameObject backPackObject;
 	private Sprite backPackImage;
+	public Sprite backPackBlank;
 	public GameObject backPackDisplay;
 
 	private GameObject interactObject;
@@ -60,7 +62,7 @@ public class PlayerController : MonoBehaviour {
 	public CameraPan cameraPan;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 
 
 		rb = GetComponent<Rigidbody2D>();
@@ -312,6 +314,13 @@ public class PlayerController : MonoBehaviour {
 			backPackDisplay.GetComponent<UpdateBackpackImage>().UpdateImage(backPackImage);
 			//Destroy(carryObject.transform.parent.gameObject);
 		}
+	}
+
+	public void ClearBackPack(int position)
+	{
+		backPackDisplay.GetComponent<UpdateBackpackImage>().UpdateImage(backPackBlank);
+		Destroy(backPack[position]);
+		backPack.RemoveAt(position);
 	}
 
 	void Elevator()
