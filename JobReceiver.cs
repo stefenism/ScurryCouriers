@@ -10,6 +10,8 @@ public class JobReceiver : MonoBehaviour {
 
 	[Header("Items currently desired to be delivered")]
 	public List<GameObject> items;
+	[Header("Items currently actively being delivered")]
+	public List<GameObject> activeItems;
 	public List<GameObject> clones;
 	public List<Sprite> itemImages;
 	public List<Sprite> destinationImages;
@@ -23,6 +25,8 @@ public class JobReceiver : MonoBehaviour {
 	private bool received;
 	private bool jobInProgress;
 	private bool activated;
+	[HideInInspector]
+	public bool jobActivated;
 
 	private int itemreceived = 100;
 
@@ -35,6 +39,7 @@ public class JobReceiver : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		items = new List<GameObject>();
+		activeItems = new List<GameObject>();
 		clones = new List<GameObject>();
 		payments = new List<int>();
 		deliveryTime = new List<float>();
@@ -47,6 +52,7 @@ public class JobReceiver : MonoBehaviour {
 		received = false;
 		jobInProgress = false;
 		activated = false;
+		jobActivated = false;
 	}
 
 	// Update is called once per frame
@@ -63,6 +69,11 @@ public class JobReceiver : MonoBehaviour {
 			received = false;
 
 			jobReceived(itemreceived);
+		}
+
+		if(jobActivated)
+		{
+			ActivateJobs();
 		}
 	}
 
@@ -107,6 +118,7 @@ public class JobReceiver : MonoBehaviour {
 			if(currentTimes[i] >= deliveryTime[i])
 			{
 				items.RemoveAt(i);
+				activeItems.RemoveAt(i);
 				payments.RemoveAt(i);
 				deliveryTime.RemoveAt(i);
 				currentTimes.RemoveAt(i);
@@ -125,6 +137,12 @@ public class JobReceiver : MonoBehaviour {
 		}
 	}
 
+	void ActivateJobs()
+	{
+		jobActivated = false;
+		activeItems.Add(items[activeItems.Count]);
+	}
+
 /*
 	I don't think this code works yet.  But the Job Spawning and receiving works
 	other than that
@@ -140,7 +158,7 @@ public class JobReceiver : MonoBehaviour {
 				i = items.Count;
 			}
 
-			if(player.backPack.Count != 0 && items.Count != 0)
+			if(player.backPack.Count != 0 && activeItems.Count != 0)
 			{
 
 				print("index: " + i);
@@ -151,7 +169,7 @@ public class JobReceiver : MonoBehaviour {
 				for(int j = 0; j < player.backPack.Count; j++)
 				{
 					Debug.Log("backpack item: " + player.backPack[j].gameObject);
-					if(items[i].gameObject.tag == player.backPack[j].gameObject.tag)
+					if(activeItems[i].gameObject.tag == player.backPack[j].gameObject.tag)
 					{
 						received = true;
 						itemreceived = i;
@@ -161,7 +179,7 @@ public class JobReceiver : MonoBehaviour {
 					}
 				}
 
-				if(items[i].gameObject.tag == item)
+				if(activeItems[i].gameObject.tag == item)
 				{
 					received = true;
 					itemreceived = i;
@@ -169,9 +187,9 @@ public class JobReceiver : MonoBehaviour {
 				}
 			}
 
-			if(items.Count != 0 && player.backPack.Count == 0)
+			if(activeItems.Count != 0 && player.backPack.Count == 0)
 			{
-				if(items[i].gameObject.tag == item)
+				if(activeItems[i].gameObject.tag == item)
 				{
 					received = true;
 					itemreceived = i;
@@ -194,6 +212,7 @@ public class JobReceiver : MonoBehaviour {
 		Debug.Log(wallet.money + " dollars");
 
 		items.RemoveAt(position);
+		activeItems.RemoveAt(position);
 		payments.RemoveAt(position);
 		deliveryTime.RemoveAt(position);
 		currentTimes.RemoveAt(position);

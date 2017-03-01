@@ -347,6 +347,7 @@ public class PlayerController : MonoBehaviour {
 			if(jobPanel.currentJobs.Count > 0);// != null)
 			{
 				jobPanel.activated = true;
+				interactObject.GetComponent<JobReceiver>().jobActivated = true;
 			}
 		}
 
