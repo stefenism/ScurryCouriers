@@ -140,7 +140,12 @@ public class JobReceiver : MonoBehaviour {
 	void ActivateJobs()
 	{
 		jobActivated = false;
-		activeItems.Add(items[activeItems.Count]);
+
+		if(activeItems.Count < items.Count)
+		{
+			activeItems.Add(items[activeItems.Count]);
+		}
+
 	}
 
 /*
@@ -187,14 +192,11 @@ public class JobReceiver : MonoBehaviour {
 				}
 			}
 
-			if(activeItems.Count != 0 && player.backPack.Count == 0)
+			if(activeItems[i].gameObject.tag == item)
 			{
-				if(activeItems[i].gameObject.tag == item)
-				{
 					received = true;
 					itemreceived = i;
 					itemInQuestion = player.carryObject;//items[i].gameObject;
-				}
 			}
 
 

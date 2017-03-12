@@ -285,6 +285,7 @@ public class PlayerController : MonoBehaviour {
 			carryObjectParent.GetComponent<MovePickupParent>().enabled = false;
 			carryObject.transform.parent = carryObjectParent.transform;
 			carryObject.tag = interactObjectTag;
+			carryObject = null;
 		}
 
 		else if(!holding)
@@ -347,6 +348,7 @@ public class PlayerController : MonoBehaviour {
 			if(jobPanel.currentJobs.Count > 0);// != null)
 			{
 				jobPanel.activated = true;
+				Debug.Log("currentjobs.count " + jobPanel.currentJobs.Count);
 				interactObject.GetComponent<JobReceiver>().jobActivated = true;
 			}
 		}
@@ -481,6 +483,7 @@ public class PlayerController : MonoBehaviour {
 				{
 					canCarry = false;
 					canJump = true;
+					carryObject = null;
 				}
 		}
 

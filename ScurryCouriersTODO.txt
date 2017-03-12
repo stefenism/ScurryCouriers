@@ -1,0 +1,11 @@
+Scurry Couriers TODO;
+
+Week of 3/13/17:
+
+-Jump Sound
+-Temp Intro Screen
+-temporary background muzac
+-REDO tiled level
+-Place Assets in tiled level
+-Learn/Study non physics controls in
+	Corgi Engine.
