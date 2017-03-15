@@ -192,12 +192,16 @@ public class JobReceiver : MonoBehaviour {
 				}
 			}
 
-			if(activeItems[i].gameObject.tag == item)
+			if(activeItems.Count != 0)
 			{
-					received = true;
-					itemreceived = i;
-					itemInQuestion = player.carryObject;//items[i].gameObject;
+				if(activeItems[i].gameObject.tag == item)
+				{
+						received = true;
+						itemreceived = i;
+						itemInQuestion = player.carryObject;//items[i].gameObject;
+				}
 			}
+
 
 
 

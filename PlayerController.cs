@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour {
 
 	private bool canControl;
 	private bool facingRight;
-	private bool jumping;
+	[HideInInspector]
+	public bool jumping;
 	private bool canCarry;
 	private bool canBackpack;
 	private bool canJump;
@@ -170,7 +171,13 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		DetermineJumpButton();
-		anim.SetFloat("vspeed", rb.velocity.y);
+		if(!grounded)
+		{
+			anim.SetFloat("vspeed", rb.velocity.y);
+		}
+
+		anim.SetBool("grounded", grounded);
+		//Debug.Log("vspeed: " + rb.velocity.y);
 
 	}
 
@@ -199,7 +206,7 @@ public class PlayerController : MonoBehaviour {
 			{
 				jumpDust.GetComponent<SpawnParticles>().play = false;
 			}
-			grounded = false;
+			//grounded = false;
 		}
 
 	}
@@ -296,6 +303,7 @@ public class PlayerController : MonoBehaviour {
 				speed = carrySpeed;
 			}
 			holding = true;
+			exclamation.enabled = false;
 			carryObjectParent = carryObject.transform.parent.gameObject;
 			carryObjectParent.GetComponent<MovePickupParent>().enabled = true;
 			carryObject.transform.parent = transform;

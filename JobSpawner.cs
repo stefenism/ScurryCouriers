@@ -50,7 +50,7 @@ public class JobSpawner : MonoBehaviour {
 			startTime = Time.time;
 			currentTime = Time.time;
 
-			nextDelivery = Random.Range(minTimeBetweenDeliveries, maxTimeBetweenDeliveries) + Time.time;
+			nextDelivery = Random.Range(minTimeBetweenDeliveries, maxTimeBetweenDeliveries) + startTime;
 
 			pickNewJob();
 		}
@@ -59,7 +59,10 @@ public class JobSpawner : MonoBehaviour {
 		{
 			activated = true;
 		}
-		currentTime = Time.time - startTime;
+		currentTime += Time.deltaTime;
+
+		Debug.Log("currentTime: " + currentTime);
+		Debug.Log("nextDelivery: " + nextDelivery);
 	}
 
 	void pickNewJob()

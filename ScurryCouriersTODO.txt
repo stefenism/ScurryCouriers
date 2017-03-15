@@ -9,3 +9,11 @@ Week of 3/13/17:
 -Place Assets in tiled level
 -Learn/Study non physics controls in
 	Corgi Engine.
+
+	current bugs:
+	-jumps are triggering more than once due to ground detection and jumping bools
+
+	-camera doesn't quite pan over perfectly all the time, the player can move
+		fast enough to trigger the camera moving BACK and get into the other Room
+		before the camera is done panning.  Thereby focusing the camera into a Room
+		that the player IS NOT in

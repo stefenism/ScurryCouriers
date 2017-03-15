@@ -13,7 +13,7 @@ public class GroundDetect : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void LateUpdate () {
+	void Update () {
 
 		//print(player.Grounded + " grounded");
 
@@ -34,10 +34,11 @@ public class GroundDetect : MonoBehaviour {
 		//{ //first argument WAS landingRay
 		//print(hit.collider + " collided tag");
 
+		
 		if(hit.collider != null)
 		{
 
-			if(hit.collider.gameObject.tag == "Ground" && (player.rb.velocity.y > 0))
+			if(hit.collider.gameObject.tag == "Ground" && (player.rb.velocity.y > 5))
 			{
 				player.grounded = false;
 			}
