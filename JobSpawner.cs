@@ -61,8 +61,8 @@ public class JobSpawner : MonoBehaviour {
 		}
 		currentTime += Time.deltaTime;
 
-		Debug.Log("currentTime: " + currentTime);
-		Debug.Log("nextDelivery: " + nextDelivery);
+		//Debug.Log("currentTime: " + currentTime);
+		//Debug.Log("nextDelivery: " + nextDelivery);
 	}
 
 	void pickNewJob()

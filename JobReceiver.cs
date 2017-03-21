@@ -23,6 +23,7 @@ public class JobReceiver : MonoBehaviour {
 	private List<float> currentTimes;
 
 	private bool received;
+	private bool backpackReceived;
 	private bool jobInProgress;
 	private bool activated;
 	[HideInInspector]
@@ -50,6 +51,7 @@ public class JobReceiver : MonoBehaviour {
 		currentTimes = new List<float>();
 
 		received = false;
+		backpackReceived = false;
 		jobInProgress = false;
 		activated = false;
 		jobActivated = false;
@@ -119,6 +121,7 @@ public class JobReceiver : MonoBehaviour {
 			{
 				items.RemoveAt(i);
 				activeItems.RemoveAt(i);
+				activeItems.RemoveAt(i);
 				payments.RemoveAt(i);
 				deliveryTime.RemoveAt(i);
 				currentTimes.RemoveAt(i);
@@ -154,14 +157,8 @@ public class JobReceiver : MonoBehaviour {
 */
 	void CheckReceipt(string item)
 	{
-		for(int i = 0; i < items.Count; i++)
+		for(int i = 0; i < activeItems.Count; i++)
 		{
-
-
-			if(received)
-			{
-				i = items.Count;
-			}
 
 			if(player.backPack.Count != 0 && activeItems.Count != 0)
 			{
@@ -177,6 +174,7 @@ public class JobReceiver : MonoBehaviour {
 					if(activeItems[i].gameObject.tag == player.backPack[j].gameObject.tag)
 					{
 						received = true;
+						backpackReceived = true;
 						itemreceived = i;
 						itemInQuestion = player.backPack[j].gameObject;
 						player.ClearBackPack(j);
@@ -202,6 +200,10 @@ public class JobReceiver : MonoBehaviour {
 				}
 			}
 
+			if(received)
+			{
+				i = items.Count;
+			}
 
 
 
@@ -227,8 +229,13 @@ public class JobReceiver : MonoBehaviour {
 		generateJobImage.RemoveJobDisplay(position);
 
 		itemreceived = 100;
-		player.PickupPutdown();
-		Destroy(itemInQuestion.transform.parent.gameObject);
+		if(!backpackReceived)
+		{
+			player.PickupPutdown();
+			Destroy(itemInQuestion.transform.parent.gameObject);
+		}
+		backpackReceived = false;
+
 		//Destroy(clones[position].transform.parent);
 		//clones.RemoveAt(position);
 
