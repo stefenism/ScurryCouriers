@@ -155,7 +155,7 @@ public class JobReceiver : MonoBehaviour {
 	I don't think this code works yet.  But the Job Spawning and receiving works
 	other than that
 */
-	void CheckReceipt(string item)
+	public void CheckReceipt(string item)
 	{
 		for(int i = 0; i < activeItems.Count; i++)
 		{

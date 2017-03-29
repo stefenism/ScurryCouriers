@@ -62,7 +62,7 @@ public class ActiveJobPanel : MonoBehaviour {
 	{
 		activated = false;
 
-		for(int i = 0; i < positions.Length - 1; i++)
+		for(int i = 0; i < currentJobs.Count; i++)
 		{
 
 
