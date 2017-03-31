@@ -19,6 +19,6 @@ public class DeliveryReceiveCheck : MonoBehaviour {
 	{
 		//itemInQuestion = collision.gameObject;
 		//Debug.Log("iteminquestion: " + itemInQuestion.gameObject);
-		bossy.GetComponent<JobReceiver>().CheckReceipt(collision.gameObject.tag);
+		bossy.GetComponent<JobReceiverold>().CheckReceipt(collision.gameObject.tag);
 	}
 }

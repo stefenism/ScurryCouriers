@@ -7,7 +7,7 @@ public class ActiveJobPanel : MonoBehaviour {
 	public GameObject[] positions;
 	public List<GameObject> currentJobs;
 	public List<GameObject> activeJobs;
-	public JobReceiver jobReceiver;
+	public JobReceiverold jobReceiver;
 
 
 	[HideInInspector]

@@ -88,7 +88,7 @@ public class JobSpawner : MonoBehaviour {
 	{
 		//add job items ("delivery" items above) to a job receiver script list.
 		//including item, location, pay, and timeframe
-		location.GetComponent<JobReceiver>().AddToList(item,pay,timeframe, itemImage, destinationImage);
+		location.GetComponent<JobReceiverold>().AddToList(item,pay,timeframe, itemImage, destinationImage);
 	}
 
 	void displayJob()
