@@ -113,7 +113,7 @@ public class JobReceiver : MonoBehaviour {
 			//transform.localScale = this.transform.parent.transform.localScale;
 		}
 
-		for(int i = 0; i < startTimes.Count; i++)
+		for(int i = 0; i < items.Count; i++)
 		{
 			currentTimes[i] = Time.time - startTimes[i];
 

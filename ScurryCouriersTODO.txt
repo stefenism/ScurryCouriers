@@ -1,6 +1,5 @@
 Scurry Couriers TODO;
 
-Week of 3/13/17:
 
 -Jump Sound
 -Temp Intro Screen
@@ -8,9 +7,15 @@ Week of 3/13/17:
 -Place Assets in tiled level
 -Learn/Study non physics controls in
 	Corgi Engine.
+-dissect and separate jobreceiver into three(?) scripts
+	1. a script that holds jobs on each individual delivery nominee
+	2. a script that move jobs over attached to the bossy
+	3. a script that checks against deliveries (attached to a "gamecontroller" object)
+		3b. move job spawner to the same object
 
 	current bugs:
 	-jumps are triggering more than once due to ground detection and jumping bools
+		and jump has some problems with walls (you can infinitely jump on the wall)
 	-camera doesn't quite pan over perfectly all the time, the player can move
 		fast enough to trigger the camera moving BACK and get into the other Room
 		before the camera is done panning.  Thereby focusing the camera into a Room
