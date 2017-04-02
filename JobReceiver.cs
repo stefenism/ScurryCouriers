@@ -25,17 +25,19 @@ public class JobReceiver : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		/*
+
 			if(jobActivated)
 			{
 				ActivateJobs();
 			}
-		*/
+
 	}
 
-	/*
+
 	public void CheckReceipt(string item)
 	{
+
+		//Debug.Log("ACTIVATEDDDDDDDd");
 		for(int i = 0; i < activeItems.Count; i++)
 		{
 
@@ -55,17 +57,35 @@ public class JobReceiver : MonoBehaviour {
 						manager.received = true;
 						manager.backpackReceived = true;
 						manager.itemreceived = activeItemsIndex[i];
-						itemInQuestion = player.backPack[j].gameObject;
+						manager.itemInQuestion = player.backPack[j].gameObject;
 						player.ClearBackPack(j);
 						j = player.backPack.Count;
+						if(activeItemsIndex.Count > 0)
+						{
+							manager.activeItemRemoveIndex = activeItemsIndex[i-1];
+						}
+						else
+						{
+							manager.activeItemRemoveIndex = activeItemsIndex[i];
+						}
+						RemoveItems(i);
 					}
 				}
 
-				if(activeItems[i].gameObject.tag == manager.item)
+				if(activeItems[i].gameObject.tag == item)
 				{
 					manager.received = true;
 					manager.itemreceived = activeItemsIndex[i];
 					manager.itemInQuestion = player.carryObject;//items[i].gameObject;
+					if(activeItemsIndex.Count > 0)
+					{
+						manager.activeItemRemoveIndex = activeItemsIndex[i-1];
+					}
+					else
+					{
+						manager.activeItemRemoveIndex = activeItemsIndex[i];
+					}
+					RemoveItems(i);
 				}
 			}
 
@@ -76,10 +96,20 @@ public class JobReceiver : MonoBehaviour {
 						manager.received = true;
 						manager.itemreceived = activeItemsIndex[i];
 						manager.itemInQuestion = player.carryObject;//items[i].gameObject;
+						if(activeItemsIndex.Count > 0)
+						{
+							manager.activeItemRemoveIndex = activeItemsIndex[i] - 1;
+						}
+						else
+						{
+							manager.activeItemRemoveIndex = activeItemsIndex[i];
+						}
+
+						RemoveItems(i);
 				}
 			}
 
-			if(received)
+			if(manager.received)
 			{
 				i = activeItems.Count;
 			}
@@ -93,7 +123,17 @@ public class JobReceiver : MonoBehaviour {
 		}
 	}
 
-	void ActivateJobs()
+	void RemoveItems(int indexLocale)
+	{
+		//Destroy(activeItems[indexLocale].gameObject);
+		activeItems.RemoveAt(indexLocale);
+		activeItemsIndex.RemoveAt(indexLocale);
+
+		//Destroy(items[indexLocale].gameObject);
+		items.RemoveAt(indexLocale);
+	}
+
+	public void ActivateJobs()
 	{
 		jobActivated = false;
 
@@ -103,10 +143,10 @@ public class JobReceiver : MonoBehaviour {
 		}
 	}
 
-	*/
+
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
-		//CheckReceipt(collision.gameObject.tag);
+		CheckReceipt(collision.gameObject.tag);
 	}
 }

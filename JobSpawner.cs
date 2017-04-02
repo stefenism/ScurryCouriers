@@ -73,13 +73,14 @@ public class JobSpawner : MonoBehaviour {
 		//decide time frame based on item. (probably a pretty large time frame)
 		//send that data to spawn new job
 		int newItem = Random.Range(0,items.Length);
+		int newLocation = Random.Range(0, locations.Length);
 
 		deliveryItem = items[newItem];
-		deliveryLocation = locations[Random.Range(0, locations.Length)];
+		deliveryLocation = locations[newLocation];
 		deliveryPay = payments[newItem];
 		deliveryTimeFrame = deliveryTimeAllotted;
 		itemImage = itemImages[newItem];
-		destinationImage = destinationImages[Random.Range(0, destinationImages.Length)];
+		destinationImage = destinationImages[newLocation];
 
 		spawnNewJob(deliveryItem, deliveryLocation, deliveryPay, deliveryTimeFrame, itemImage, destinationImage);
 	}
@@ -88,7 +89,8 @@ public class JobSpawner : MonoBehaviour {
 	{
 		//add job items ("delivery" items above) to a job receiver script list.
 		//including item, location, pay, and timeframe
-		location.GetComponent<JobReceiverold>().AddToList(item,pay,timeframe, itemImage, destinationImage);
+		GetComponent<JobManager>().AddToList(item, location, pay,timeframe, itemImage, destinationImage);
+		//location.GetComponent<JobReceiverold>().AddToList(item,pay,timeframe, itemImage, destinationImage);
 	}
 
 	void displayJob()
