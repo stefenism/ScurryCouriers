@@ -171,12 +171,23 @@ public class JobManager : MonoBehaviour {
 	{
 		jobActivated = false;
 
-		if(activeItems.Count < items.Count)
+		if(activeItems.Count < 4 && activeItems.Count < items.Count)
 		{
 			activeItems.Add(items[activeItems.Count]);
       locations[activeItems.Count -1].gameObject.GetComponent<JobReceiver>().jobActivated = true;
 		}
 
+	}
+
+	void AdjustIndexes(int position)
+	{
+		for(int i = 0; i < receivers.Length; i++)
+		{
+			for(int n = position; n < receivers[i].activeItemsIndex.Count; n++)
+			{
+				receivers[i].activeItemsIndex[n]--;
+			}
+		}
 	}
 
 	void jobReceived(int position)
@@ -191,6 +202,7 @@ public class JobManager : MonoBehaviour {
 		currentTimes.RemoveAt(position);
 		startTimes.RemoveAt(position);
 
+		AdjustIndexes(activeItemRemoveIndex);
 		generateJobImage.RemoveJobDisplay(activeItemRemoveIndex);
 
 		itemreceived = 100;

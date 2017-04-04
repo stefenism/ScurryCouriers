@@ -54,38 +54,16 @@ public class JobReceiver : MonoBehaviour {
 					Debug.Log("backpack item: " + player.backPack[j].gameObject);
 					if(activeItems[i].gameObject.tag == player.backPack[j].gameObject.tag)
 					{
-						manager.received = true;
-						manager.backpackReceived = true;
-						manager.itemreceived = activeItemsIndex[i];
+						ReceiveItems(i);
 						manager.itemInQuestion = player.backPack[j].gameObject;
 						player.ClearBackPack(j);
 						j = player.backPack.Count;
-						if(activeItemsIndex.Count > 0)
-						{
-							manager.activeItemRemoveIndex = activeItemsIndex[i-1];
-						}
-						else
-						{
-							manager.activeItemRemoveIndex = activeItemsIndex[i];
-						}
-						RemoveItems(i);
 					}
 				}
 
-				if(activeItems[i].gameObject.tag == item)
+				if(activeItems[i].gameObject.tag == item && activeItems.Count != 0)
 				{
-					manager.received = true;
-					manager.itemreceived = activeItemsIndex[i];
-					manager.itemInQuestion = player.carryObject;//items[i].gameObject;
-					if(activeItemsIndex.Count > 0)
-					{
-						manager.activeItemRemoveIndex = activeItemsIndex[i-1];
-					}
-					else
-					{
-						manager.activeItemRemoveIndex = activeItemsIndex[i];
-					}
-					RemoveItems(i);
+					ReceiveItems(i);
 				}
 			}
 
@@ -93,19 +71,7 @@ public class JobReceiver : MonoBehaviour {
 			{
 				if(activeItems[i].gameObject.tag == item)
 				{
-						manager.received = true;
-						manager.itemreceived = activeItemsIndex[i];
-						manager.itemInQuestion = player.carryObject;//items[i].gameObject;
-						if(activeItemsIndex.Count > 0)
-						{
-							manager.activeItemRemoveIndex = activeItemsIndex[i] - 1;
-						}
-						else
-						{
-							manager.activeItemRemoveIndex = activeItemsIndex[i];
-						}
-
-						RemoveItems(i);
+						ReceiveItems(i);
 				}
 			}
 
@@ -113,14 +79,24 @@ public class JobReceiver : MonoBehaviour {
 			{
 				i = activeItems.Count;
 			}
-
-
-
-			else if(i + 1 >= activeItems.Count)
-			{
-				Debug.Log("failed");
-			}
 		}
+	}
+
+	void ReceiveItems(int position)
+	{
+		manager.received = true;
+		manager.itemreceived = activeItemsIndex[position];
+		manager.itemInQuestion = player.carryObject;//items[i].gameObject;
+		if(activeItemsIndex.Count > 0)
+		{
+			manager.activeItemRemoveIndex = activeItemsIndex[position] - 1;
+		}
+		else
+		{
+			manager.activeItemRemoveIndex = activeItemsIndex[position];
+		}
+
+		RemoveItems(position);
 	}
 
 	void RemoveItems(int indexLocale)
