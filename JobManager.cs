@@ -106,16 +106,19 @@ public class JobManager : MonoBehaviour {
 		//itemImages.Add(jobImage);
 		//destinationImages.Add(destinationImage);
 		generateJobImage.GenerateImageObject(jobImage, destinationImage);
-    AddToLocation(item, location);
+    AddToLocation(item, location, time);
 		StartTimer();
 	}
 
-  void AddToLocation(GameObject item, GameObject location)
+  void AddToLocation(GameObject item, GameObject location, float time)
   {
     JobReceiver receiver = location.gameObject.GetComponent<JobReceiver>();
 
     receiver.items.Add(item);
     receiver.activeItemsIndex.Add(items.Count);
+		receiver.deliveryTimes.Add(time);
+		receiver.startTimes.Add(Time.time);
+		receiver.currentTimes.Add(Time.time);
 
   }
 
@@ -161,6 +164,8 @@ public class JobManager : MonoBehaviour {
 				deliveryTime.RemoveAt(i);
 				currentTimes.RemoveAt(i);
 				startTimes.RemoveAt(i);
+
+
 
 				generateJobImage.RemoveJobDisplay(i);
 			}

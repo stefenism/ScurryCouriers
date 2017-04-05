@@ -7,6 +7,15 @@ public class JobReceiver : MonoBehaviour {
 	public List<GameObject> items;
 	public List<GameObject> activeItems;
 	public List<int> activeItemsIndex;
+
+	[HideInInspector]
+	public List<float> currentTimes;
+	[HideInInspector]
+	public List<float> deliveryTimes;
+	[HideInInspector]
+	public List<float> startTimes;
+
+
 	public PlayerController player;
 	public JobManager manager;
 
@@ -17,6 +26,9 @@ public class JobReceiver : MonoBehaviour {
 		items = new List<GameObject>();
 		activeItems = new List<GameObject>();
 		activeItemsIndex = new List<int>();
+		currentTimes = new List<float>();
+		deliveryTimes = new List<float>();
+		startTimes = new List<float>();
 
 		jobActivated = false;
 
@@ -30,6 +42,30 @@ public class JobReceiver : MonoBehaviour {
 			{
 				ActivateJobs();
 			}
+
+			CheckTimes();
+
+	}
+
+	void CheckTimes()
+	{
+
+		if(currentTimes.Count != 0)
+		{
+			for(int i = 0; i < items.Count; i++)
+			{
+				currentTimes[i] = Time.time - startTimes[i];
+
+				if(currentTimes[i] >= deliveryTimes[i])
+				{
+					items.RemoveAt(i);
+					activeItems.RemoveAt(i);
+					deliveryTimes.RemoveAt(i);
+					currentTimes.RemoveAt(i);
+					startTimes.RemoveAt(i);
+				}
+			}
+		}
 
 	}
 
@@ -96,10 +132,11 @@ public class JobReceiver : MonoBehaviour {
 			manager.activeItemRemoveIndex = activeItemsIndex[position];
 		}
 
+		Debug.Log("remove index: " + activeItemsIndex[position]);
 		RemoveItems(position);
 	}
 
-	void RemoveItems(int indexLocale)
+	public void RemoveItems(int indexLocale)
 	{
 		//Destroy(activeItems[indexLocale].gameObject);
 		activeItems.RemoveAt(indexLocale);
