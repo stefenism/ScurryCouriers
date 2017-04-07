@@ -90,16 +90,20 @@ public class JobReceiver : MonoBehaviour {
 					Debug.Log("backpack item: " + player.backPack[j].gameObject);
 					if(activeItems[i].gameObject.tag == player.backPack[j].gameObject.tag)
 					{
-						ReceiveItems(i);
 						manager.itemInQuestion = player.backPack[j].gameObject;
 						player.ClearBackPack(j);
 						j = player.backPack.Count;
+						ReceiveItems(i);
 					}
 				}
 
-				if(activeItems[i].gameObject.tag == item && activeItems.Count != 0)
+				if(activeItems.Count != 0)
 				{
-					ReceiveItems(i);
+					if(activeItems[i].gameObject.tag == item)
+					{
+						ReceiveItems(i);
+					}
+
 				}
 			}
 

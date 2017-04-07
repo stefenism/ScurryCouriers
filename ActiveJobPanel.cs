@@ -68,8 +68,8 @@ public class ActiveJobPanel : MonoBehaviour {
 
 				if(activeJobs.Count < positions.Length)
 				{
-					Debug.Log("currentjobs.count " + currentJobs.Count);
-					Debug.Log("i = " + i);
+					//Debug.Log("currentjobs.count " + currentJobs.Count);
+					//Debug.Log("i = " + i);
 
 					if(currentJobs[i].transform.position != positions[activeJobs.Count].transform.position)
 					{

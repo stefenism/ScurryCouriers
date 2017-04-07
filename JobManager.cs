@@ -188,9 +188,13 @@ public class JobManager : MonoBehaviour {
 	{
 		for(int i = 0; i < receivers.Length; i++)
 		{
-			for(int n = position; n < receivers[i].activeItemsIndex.Count; n++)
+			for(int n = 0; n < receivers[i].activeItemsIndex.Count; n++)
 			{
-				receivers[i].activeItemsIndex[n]--;
+				if(receivers[i].activeItemsIndex[n] > position)
+				{
+					receivers[i].activeItemsIndex[n]--;
+				}
+
 			}
 		}
 	}
@@ -198,7 +202,7 @@ public class JobManager : MonoBehaviour {
 	void jobReceived(int position)
 	{
 		wallet.AddMoney(payments[position]);
-		Debug.Log(wallet.money + " dollars");
+		//Debug.Log(wallet.money + " dollars");
 
 		items.RemoveAt(position);
 		activeItems.RemoveAt(activeItemRemoveIndex);
