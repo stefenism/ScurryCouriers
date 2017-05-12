@@ -176,7 +176,7 @@ public class JobManager : MonoBehaviour {
 	{
 		jobActivated = false;
 
-		if(activeItems.Count < 4 && activeItems.Count < items.Count)
+		if(activeItems.Count <= 4 && activeItems.Count <= items.Count)
 		{
 			activeItems.Add(items[activeItems.Count]);
       locations[activeItems.Count -1].gameObject.GetComponent<JobReceiver>().jobActivated = true;
@@ -220,7 +220,11 @@ public class JobManager : MonoBehaviour {
 			player.PickupPutdown();
 			Destroy(itemInQuestion.transform.parent.gameObject);
 		}
-		backpackReceived = false;
+		else
+		{
+			backpackReceived = false;
+		}
+
 
 		//Destroy(clones[position].transform.parent);
 		//clones.RemoveAt(position);

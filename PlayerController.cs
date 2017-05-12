@@ -295,7 +295,7 @@ public class PlayerController : MonoBehaviour {
 			carryObject = null;
 		}
 
-		else if(!holding)
+		else //if(!holding)
 		{
 			if(carryObject.tag == "Water" || carryObject.tag == "Honey")
 			{

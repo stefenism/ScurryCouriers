@@ -91,6 +91,7 @@ public class JobReceiver : MonoBehaviour {
 					if(activeItems[i].gameObject.tag == player.backPack[j].gameObject.tag)
 					{
 						manager.itemInQuestion = player.backPack[j].gameObject;
+						manager.backpackReceived = true;
 						player.ClearBackPack(j);
 						j = player.backPack.Count;
 						ReceiveItems(i);
