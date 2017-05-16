@@ -353,7 +353,7 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			if(jobPanel.currentJobs.Count > 0);// != null)
+			if(jobPanel.currentJobs.Count > 0 && jobPanel.currentJobs.Count <= 4);// != null)
 			{
 				jobPanel.activated = true;
 				Debug.Log("currentjobs.count " + jobPanel.currentJobs.Count);

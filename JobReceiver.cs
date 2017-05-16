@@ -95,6 +95,7 @@ public class JobReceiver : MonoBehaviour {
 						player.ClearBackPack(j);
 						j = player.backPack.Count;
 						ReceiveItems(i);
+						return;
 					}
 				}
 
@@ -103,6 +104,7 @@ public class JobReceiver : MonoBehaviour {
 					if(activeItems[i].gameObject.tag == item)
 					{
 						ReceiveItems(i);
+						return;
 					}
 
 				}
@@ -113,6 +115,7 @@ public class JobReceiver : MonoBehaviour {
 				if(activeItems[i].gameObject.tag == item)
 				{
 						ReceiveItems(i);
+						return;
 				}
 			}
 
@@ -155,7 +158,7 @@ public class JobReceiver : MonoBehaviour {
 	{
 		jobActivated = false;
 
-		if(activeItems.Count < items.Count)
+		if(activeItems.Count <= items.Count)
 		{
 			activeItems.Add(items[activeItems.Count]);
 		}

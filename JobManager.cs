@@ -141,15 +141,6 @@ public class JobManager : MonoBehaviour {
 			activated = false;
 			startTimes.Add(Time.time);
 			currentTimes.Add(Time.time);
-
-			//need to add a condition that activates the jobalert rather than spawn one
-
-			//clone = Instantiate(jobAlertPrefab, noticePosition.transform.position, Quaternion.identity) as GameObject;
-			//clone.GetComponent<OffScreenNotifier>().originalPosition = noticePosition;
-
-			//clones.Add(clone);
-			//clone.GetComponent<ParticleSystem>().enableEmission = true;
-			//transform.localScale = this.transform.parent.transform.localScale;
 		}
 
 		for(int i = 0; i < items.Count; i++)
@@ -164,6 +155,7 @@ public class JobManager : MonoBehaviour {
 				deliveryTime.RemoveAt(i);
 				currentTimes.RemoveAt(i);
 				startTimes.RemoveAt(i);
+				locations.RemoveAt(i);
 
 
 
@@ -176,7 +168,7 @@ public class JobManager : MonoBehaviour {
 	{
 		jobActivated = false;
 
-		if(activeItems.Count <= 4 && activeItems.Count <= items.Count)
+		if(activeItems.Count <= 4 && items.Count > activeItems.Count)// <= items.Count)
 		{
 			activeItems.Add(items[activeItems.Count]);
       locations[activeItems.Count -1].gameObject.GetComponent<JobReceiver>().jobActivated = true;
@@ -210,6 +202,7 @@ public class JobManager : MonoBehaviour {
 		deliveryTime.RemoveAt(position);
 		currentTimes.RemoveAt(position);
 		startTimes.RemoveAt(position);
+		locations.RemoveAt(activeItemRemoveIndex);
 
 		AdjustIndexes(activeItemRemoveIndex);
 		generateJobImage.RemoveJobDisplay(activeItemRemoveIndex);
